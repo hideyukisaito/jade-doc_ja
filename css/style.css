@@ -1,0 +1,170 @@
+@charset "UTF-8";
+html, body {
+    font-style: normal;
+    font-size: 13px;
+    font-family: Helvetica, Arial, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', Osaka, 'メイリオ', Meiryo, 'MS Pゴシック', 'MS PGothic', sans-serif;
+}
+h1 { font-size: 2em; }
+h1 a { color: #3f3f3f; }
+h1 .en { font-weight: bold; color: #a23e42; }
+h2 { margin-bottom: 12px; font-size: 1.2em; }
+a { text-decoration: none; color: #b65250; }
+a:hover { text-decoration: underline; }
+p { line-height: 1.8em; margin-bottom: 15px; }
+em { font-style: italic; }
+.filter { font-weight: 900; color: #353535 ; }
+.header, .section, .article, .footer, nav { display: block; }
+.syntaxhighlighter { overflow-y: hidden !important; }
+.syntaxhighlighter table { margin: 0.2em 0 1em 0 !important; }
+.syntaxhighlighter .gutter .line { border-right-color: #767676 !important; }
+.syntaxhighlighter .line.alt1 { background-color:#F0F0F0 !important; }
+.syntaxhighlighter .line.alt2 { background-color:#DADADA !important; }
+.example {
+    margin: 0 2px;
+    padding: 1px 3px;
+    background: #dadada;
+    border: 1px solid #919191;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    color: #3f3f3f;
+    font-size: 0.9em;
+    line-height: 0.9em;
+}
+
+body, #wrap {
+    width: 100%;
+    height: 100%;
+}
+
+#main-header {
+    position: relative;
+    width: 100%;
+    padding: 20px 0;
+    margin-bottom: 30px;
+}
+#main-header h1,  #main-header p {
+    margin-left: 20px;
+}
+#toolbar {
+    float: right;
+    width: 100%;
+    height: 25px;
+    padding-top: 5px;
+    border-top: 1px solid #dadada;
+    border-bottom: 1px solid #dadada;
+}
+#toolbar span {
+    display: block;
+    float: right;
+    margin-left: 10px;
+}
+
+#content-wrap {
+    position: relative;
+    width: 100%;
+}
+
+#sidebar {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 550px;
+    overflow: hidden;
+}
+
+#global-nav {
+    position: relative;
+    height: 330px;
+}
+#global-nav ul li {
+    width: 100%;
+    height: 30px;
+    padding-left: 15px;
+    border-bottom: 1px dotted black;
+}
+#global-nav ul li:hover {
+    cursor: pointer;
+    background: #e57370;
+}
+#global-nav ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: black;
+    text-decoration: none;
+    line-height: 30px;
+}
+#global-nav ul li:hover a {
+    color: white;
+}
+
+#info {
+    margin: 20px 0 0 -10px;
+    border: 2px solid black;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+#info h1 {
+    padding: 5px 0 5px 20px;
+    font-size: 1em;
+    border-bottom: 2px solid black;
+}
+#info p {
+    padding: 15px 0 5px 20px;
+    font-size: 0.9em;
+}
+
+#contents {
+    position: absolute;
+    top: 0;
+    left: 20%;
+    width: 73%;
+    margin-left: 60px;
+}
+#contents > .section {
+    margin-bottom: 30px;
+    background: white;
+    border: 2px solid #000;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+.section h1 {
+    padding: 5px 0 5px 10px;
+    font-size: 1.5em;
+    border-bottom: 2px solid black;
+}
+.section .article {
+    padding: 13px;
+}
+.section .article h2 {
+    height: 1.5em;
+    padding: 2px 0 2px 12px;
+    line-height: 1.5em;
+    border-left: 8px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+#features ul, #implementations ul { margin-left: 20px; }
+#features ul li, #implementations ul li { list-style-type: disc !important; line-height: 1.5em !important; }
+#features ul li ul { margin-left: 30px; }
+#features ul li ul li { list-style-type: circle !important; line-height: 1.5em !important; }
+#api ul li {
+    line-height: 1.8em;
+}
+
+#back {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+}
+#back a {
+    display: block;
+    margin-left: 20px;
+    line-height: 50px;
+    color: black;
+}
