@@ -1,1 +1,759 @@
-hello
+<!DOCTYPE html>
+<html lang="ja-JP">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<title>Jadeドキュメント 日本語訳</title>
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css" />
+	<link rel="stylesheet" href="js/sh/styles/shCore.css" />
+	<link rel="stylesheet" href="js/sh/styles/shThemeEclipse.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script type="text/javascript" src="js/jquery/jquery-1.6.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/jquery/jquery.smooth-scroll.min.js"></script>
+	<script type="text/javascript" src="js/jquery/jquery.exscrollevent.js"></script>
+	<script type="text/javascript" src="js/sh/scripts/shCore.js"></script>
+	<script type="text/javascript" src="js/sh/scripts/shBrushBash.js"></script>
+	<script type="text/javascript" src="js/sh/scripts/shBrushCss.js"></script>
+	<script type="text/javascript" src="js/sh/scripts/shBrushJScript.js"></script>
+	<script type="text/javascript">
+        $(function() {
+            SyntaxHighlighter.all();
+            
+            var initY = $('#content-wrap').offset().top;
+            $(window).exScrollEvent({
+                delay : 10,
+                callback : function(evt,param){
+                    if(param.status == 0){
+                        $('#sidebar').stop().animate({
+                            top : Math.max(0, param.scroll.top - initY)
+                        });
+                    }
+                }
+            });
+            
+            $('a').click(function() {
+				if (($(this).attr('href')).indexOf('#') != -1) {
+                	$.smoothScroll({
+                    	easing: 'easeOutQuart',
+                    	scrollTarget: $(this).attr('href'),
+                    	speed: 800
+                	});
+				}
+            });
+        });
+	</script>
+</head>
+<body>
+    <div style="position:fixed; width: 100px; height:100px" id="counter"></div>
+    <div id="wrap">
+        <header class="header" id="main-header">
+            <h1><a href="http://hideyukisaito.com/doc/jade/">Jade - テンプレートエンジン 日本語訳</a></h1>
+            <p>node.jsにおけるHamlライクなテンプレートエンジン「Jade」のドキュメントの日本語訳です。</p>
+            <div id="toolbar">
+                <span><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="hideyukisaito" data-lang="ja">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></span>
+                <span><a href="http://b.hatena.ne.jp/entry/http://hideyukisaito.com/doc/jade/" class="hatena-bookmark-button" data-hatena-bookmark-title="Jadeドキュメント 日本語訳" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script></span>
+                <span><a href="http://www.delicious.com/save" onclick="window.open('http://www.delicious.com/save?v=5&noui&jump=close&url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title), 'delicious','toolbar=no,width=550,height=550'); return false;"><img src="http://l.yimg.com/hr/img/delicious.small.gif" height="19" width="19" alt="Delicious" /></a></span>
+                <span><iframe src="http://www.facebook.com/plugins/like.php?href=http%3a%2f%2fhideyukisaito%2ecom%2fdoc%2fjade%2f&layout=button_count&show_faces=false&width=100&action=like&colorscheme=light" allowtransparency="true" style="border: medium none ; overflow: hidden; width: 100px; height:px;" frameborder="0" scrolling="no"></iframe></span>
+            </div>
+        </header><!-- header end -->
+        
+        <div id="content-wrap">
+            <div id="sidebar">
+                <nav class="nav" id="global-nav">
+                    <ul>
+                        <li><a href="#about"><b>About Jade</b> | Jadeとは</a></li>
+                        <li><a href="#features"><b>Features</b> | 主な機能</a></li>
+                        <li><a href="#implementations"><b>Implementations</b> | 実装されている言語</a></li>
+                        <li><a href="#install"><b>Installation</b> | インストール</a></li>
+                        <li><a href="#browser-support"><b>Browser Support</b> | ブラウザサポート</a></li>
+                        <li><a href="#api"><b>Public API</b> | パブリックAPI</a></li>
+                        <li><a href="#syntax"><b>Syntax</b> | シンタックス</a></li>
+                        <li><a href="#filters"><b>Filters</b> | フィルタ</a></li>
+                        <li><a href="#code"><b>Code</b> | コード</a></li>
+                        <li><a href="#bin"><b>bin/jade</b></a></li>
+                    </ul>
+                </nav><!-- Global nav end -->
+                
+                <section class="section" id="info">
+                    <h1>このドキュメントについて</h1>
+                    <p>翻訳者: <a href="https://twitter.com/#!/hideyukisaito" target="_blank">@hideyukisaito</a><br />
+					更新日: 2011年6月3日<br />
+                    どこかおかしな点など、ご意見ありましたらお気軽にTwitterで捕まえてください。<br />
+                    少し手もお役に立てれば幸いです。</p>
+                </section>
+            </div>
+            
+            <div id="contents">
+                <section class="section" id="about">
+                    <h1><span class="en">About Jade</span> | Jadeとは</h1>
+                    <article class="article">
+                        <p>Jadeは<a href="http://haml-lang.com/">Haml</a>に大きな影響を受けた<a href="http://nodejs.org/">node</a>向けのハイパフォーマンスなテンプレートエンジンで、JavaScriptによって実装されています。<br />
+                            - <a href="http://jade-lang.com/">Jade</a><br />
+                            - <a href="https://github.com/visionmedia/jade">Jade on github</a>
+                        </p>
+                    </article>
+                </section>
+                <section class="section" id="features">
+                    <h1><span class="en">Features</span> | 主な機能</h1>
+                    <article class="article">
+                        <ul>
+                            <li>クライアントサイドのサポート</li>
+                            <li>高い可読性</li>
+							<li>アトリビュートの補間</li>
+                            <li>柔軟なインデント構文</li>
+                            <li>拡張ブロック</li>
+                            <li>セキュリティに考慮し、デフォルトでコードをエスケープ</li>
+                            <li>コンパイル＆実行時の構文エラー報告</li>
+                            <li>コマンドラインからjadeテンプレートをコンパイルして実行可能</li>
+                            <li>HTML5モード(DOCTYPEとして<code class="example">!!! 5</code>を使用)</li>
+                            <li>メモリキャッシュ(オプション)</li>
+                            <li>動的/静的なタグクラスの組み合わせ</li>
+                            <li>「フィルタ」を使用した構文木の操作</li>
+                            <li><a href="http://expressjs.com/">Express</a>の標準サポート</li>
+                            <li>オブジェクト、配列、あるいは列挙に対応していないデータの<code class="example">- each</code>によるイテレーション</li>
+                            <li>ブロックコメント</li>
+                            <li>タグプリフィクス無し</li>
+                            <li>AST(Abstract Syntax Tree, <a href="http://ja.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E6%A7%8B%E6%96%87%E6%9C%A8" target="_blank">抽象構文木</a>)フィルタ</li>
+                            <li>フィルタ -
+                                <ul>
+                                    <li><span class="filter">:sass</span> <a href="http://github.com/visionmedia/sass.js">sass.js</a>のインストールで使用可能</li>
+                                    <li><span class="filter">:less</span> <a href="http://github.com/cloudhead/less.js">less.js</a>のインストールで使用可能</li>
+                                    <li><span class="filter">:markdown</span> <a href="http://github.com/evilstreak/markdown-js">markdown-js</a>または<a href="http://github.com/visionmedia/node-discount">node-discount</a>のインストールで使用可能</li>
+                                    <li><span class="filter">:cdata</span></li>
+                                    <li><span class="filter">:coffeescript</span> <a href="http://jashkenas.github.com/coffee-script/">coffee-script</a>のインストールで使用可能</li>
+                                </ul>
+                            </li>
+                            <li><a href="https://github.com/digitaltoad/vim-jade">Vimシンタックス</a></li>
+                            <li><a href="http://github.com/miksago/jade-tmbundle">TextMateバンドル</a></li>
+                            <li><a href="http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs">Screencasts</a></li>
+                            <li><a href="https://github.com/donpark/html2jade">html2jade</a>を使用した変換</li>
+                        </ul>
+                    </article>
+                </section><!-- section#features end -->
+                   
+                <section class="section" id="implementations">
+                    <h1><span class="en">Implementations</span> | 実装されている言語</h1>
+                    <article class="article">
+                        <ul>
+                            <li>PHP - <a href="http://github.com/everzet/jade.php">jade.php</a></li>
+                            <li>Scala - <a href="http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html">Scaml</a></li>
+                            <li>Ruby - <a href="http://github.com/stonean/slim">Slim</a></li>
+                        </ul>
+                    </article>
+                </section>
+                
+                <section class="section" id="install">
+                    <h1><span class="en">Installation</span> | インストール</h1>
+                    <article class="article">
+                        <p>npmを使用します。<br />
+                        <pre class="brush:bash">$ npm install jade</pre>
+                        </p>
+                    </article>
+                </section><!-- section#implementation end -->
+                
+                <section class="section" id="browser-support">
+                    <h1><span class="en">Browser Support</span> | ブラウザサポート</h1>
+                    <article class="article">
+                        <p>Jadeをクライアントサイドで使用するのに適した単一のファイルにコンパイルするには、次のコマンドを実行するだけです。 <br />
+                        <script class="brush:bash;" type="syntaxhighlighter">$ make jade.js</script>
+                        </p>
+                        <p>また、npmによってuglifyjsがインストールされていれば(<code class="example">npm install uglifyjs</code>)、以下のコマンドを実行することでminify版と通常版、両方のファイルを得ることができます。<br />
+                        <script class="brush:bash;" type="syntaxhighlighter">$ make jade.min.js</script>
+                        </p>
+                    </article>
+                </section><!-- section#browser-support end -->
+                
+                <section class="section" id="api">
+                    <h1><span class="en">Public API</span> | パブリックAPI</h1>
+                    <article class="article">
+                        <pre class="brush:js">
+                            var jade = require('jade');
+                            
+                            // 文字列をレンダリング
+                            jade.render('string of jade', { options: 'here' });
+                            
+                            // ファイルの内容をレンダリング
+                            jade.renderFile('path/to/some.jade', { options: 'here' }, function(err, html) {
+                                // "options"を省略して、コールバックを第2引数にすることも出来る.
+                            });
+                            
+                            // 関数をコンパイル.
+                            var fn = jade.compile('string of jade', options);
+                            fn.call(scope, locals);
+                        </pre>
+                       
+                        <section class="section">
+                            <h2>オプション</h2>
+                            <ul>
+                                <li><code class="example">scope</code>: スコープ(this)を設定します。</li>
+                                <li><code class="example">self</code>: ローカル変数の束縛に<code class="example">self</code>名前空間を使用します。デフォルトではfalseです。</li>
+                                <li><code class="example">locals</code>: ローカル変数を含んだオブジェクト。</li>
+                                <li><code class="example">filename</code>: 例外発生時に使用されるファイル。また、<code class="example">cache</code>の設定時にこのファイルがrequireされます。 </li>
+                                <li><code class="example">cache</code>: Cache intermediate JavaScript in memory keyed by filename</li>
+                                <li><code class="example">debug</code>: Outputs tokens and function body generated</li>
+                                <li><code class="example">compiler</code>: デフォルトのコンパイラを置き換えます。</li>
+                            </ul>
+                        </section>
+                    </article>
+                </section><!-- section#api end -->
+                
+                <section class="section" id="syntax">
+                    <h1><span class="en">Syntax</span> | シンタックス</h1>
+                    <article class="article">
+                        <h2>行末処理</h2>
+                        <p><b>CRLF</b>と<b>CR</b>は解析前に<b>LF</b>に変換されます。</p>
+                    </article>
+                    <article class="article">
+                        <h2>タグ</h2>
+                        <p>タグの記述はとてもシンプルです。
+                        <script class="brush:js;" type="syntaxhighlighter">
+                        html
+                        </script>
+                        上記の例は 
+                        <script class="brush:js;" type="syntaxhighlighter">
+                        <![CDATA[<html></html>]]>
+                        </script>
+                        に変換されます。
+                        </p>
+                        
+                        <p>idを持たせるには次のようにします。</p>
+                        <script class="brush: css"  type="syntaxhighlighter">div#container</script>
+                        出力:
+                        <script class="brush: css"  type="syntaxhighlighter"><![CDATA[<div id="container"></div>]]></script>
+                        </p>
+                        
+                        <p>classはどうでしょう？</p>
+                        <script class="brush: css"  type="syntaxhighlighter">div.user-details</script>
+                        出力:
+                        <script class="brush: css"  type="syntaxhighlighter"><![CDATA[<div class="user-details"></div>]]></script>
+                        </p>
+                        
+                        <p>複数のclassおよびidは？
+                        <script class="brush: css"  type="syntaxhighlighter">div#foo.bar.baz</script>
+                        出力:
+                        <script class="brush: css"  type="syntaxhighlighter"><![CDATA[<div id="foo" class="bar baz"></div>]]></script>
+                        </p>
+                       
+                        <p>煩わしいdivの記述は次のようにシンプルにできます。
+                        <script class="brush: css"  type="syntaxhighlighter">
+                        #foo
+                        .bar
+                        </script>
+                        すでによくやっているシンタックスシュガーですね。出力は以下のようになります:<br />
+                        <script class="brush: css"  type="syntaxhighlighter"><![CDATA[<div id="foo"></div><div class="bar"></div>]]></script>
+                        </p>
+                    </article>
+                    <article class="article">
+                        <h2>タグ内のテキスト</h2>
+                        <p>タグの後にコンテンツを記述するだけです。
+                        <script class="brush: css"  type="syntaxhighlighter">p wahoo!</script>
+                        出力:
+                        <script class="brush: css"  type="syntaxhighlighter"><![CDATA[<p>wahoo!</p>]]></script>
+                        </p>
+                        
+                        <p>クールでしょ？でも内容が多いときはどうでしょう。<br />
+                        <script class="brush: bash"  type="syntaxhighlighter">
+                        p
+                          | foo bar baz
+                          | rawr rawr
+                          | super cool
+                          | go jade go
+                        </script>
+                        出力:
+                        <script class="brush: css"  type="syntaxhighlighter"><![CDATA[<p>foo bar baz rawr.....</p>]]></script>
+                        </p>
+                        
+                        <p>補間は？もちろん！どんなタイプのテキストでも補間を利用できます。<br />
+                        もし <code class="example">{ locals: { name: 'tj', email: 'tj@vision-media.ca' }}</code> を <code>render()</code> 関数に渡すのであれば、jadeテンプレートには次のように記述します。<br />
+                        <script class="brush: css"  type="syntaxhighlighter">#user #{name}: #{email}</script>
+                        こうすることで、次のような出力が得られます。
+                        <script class="brush: css"  type="syntaxhighlighter"><![CDATA[<div id="user">tj: tj@vision-media.ca</div>]]></script>文字参照はエスケープされます。
+                        </p>
+                        
+                        <p>もし何らかの理由で <code class="example">#{}</code> という表記をそのまま使用したいときは、単にエスケープするだけです。<br />
+                        <script class="brush: css"  type="syntaxhighlighter">p \#{something}</script>
+                        これで
+                        <script class="brush: css"  type="syntaxhighlighter"><![CDATA[<p>#{something}</p>]]></script> という出力が得られます。
+                        </p>
+                        
+                        <p><code class="example">!{value}</code> という記述を使用することで、エスケープされていない出力を得ることができます。<br />
+                        次の例は、リテラル表記のscriptタグを出力します。
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        var value = "&lt;script&gt;&lt;/script&gt;"
+                        !{value}</script>
+                        </p>
+                        
+                        <p>ネストされたタグがテキストを含む場合は、必要に応じてテキストブロックを使用できます。
+                        <script class="brush: css"  type="syntaxhighlighter">
+                        label
+                          Username:
+                          input(name="user[name]")</script>
+                        もしくは、タグの後すぐにテキストを記述します。
+                        <script class="brush: css"  type="syntaxhighlighter">
+                        label Username:
+                          input(name="user[name]")</script>
+                        </p>
+                        
+                        <p>タグがテキストのみの使用を許可するものの場合(例: script, style, textarea)、テキストブロックを表す <code class="example">|</code>  は必要ありません。次のように記述できます。
+                        <script class="brush: css"  type="syntaxhighlighter">
+                        html
+                          head
+                            title Example
+                            script
+                              if (foo) {
+                                bar();
+                              } else {
+                                baz();
+                              }</script>
+                        </p>
+                        
+                        <p>同様な方法として、<code class="example">. (ドット)</code>を使用することでもテキストブロックを表現できます。これは次のように記述します。
+                        <script class="brush: css"  type="syntaxhighlighter">
+                        p.
+                          foo asdf
+                          asdf
+                            asdfasdfasdf
+                            asdf
+                          asd.</script>
+                        出力:
+                        <script class="brush: css"  type="syntaxhighlighter">
+                        <![CDATA[
+                        <p>foo asdf
+                        asdf
+                          asdfasdfasdf
+                          asdf
+                        asd.
+                        <p>]]></script>
+                        </p>
+                        
+                        <p>しかしながら、スペースの後に続く<code class="example">. (ドット)</code>はJadeパーサに無視されます。例えば次のような記述は<br />
+                        <script class="brush: css"  type="syntaxhighlighter">p .</script>
+                        次のように出力されます。<br />
+                        <script class="brush: css"  type="syntaxhighlighter"><![CDATA[<p> .</p>]]></script>
+                        <br />
+                        <span>訳者注:<br />
+                        もしひとつ上の例をこの書き方でコンパイルするとどうなるでしょう？答えはこうです！
+                        <script class="brush: css"  type="syntaxhighlighter"><![CDATA[<p>.<foo>asdf</foo><asdf><asdfasdfaf></asdfasdfaf><asdf></asdf></asdf><asd></asd></p>]]></script></span>
+                        </p>
+                    </article>
+                    <article class="article">
+                        <div>
+                            <h2>コメント</h2>
+                            <p>今のところ、単一行コメントはJavaScriptと同様に <code class="example">//</code> を使用します。
+                            <script class="brush: js"  type="syntaxhighlighter">
+                            // just some paragraphs
+                            p foo
+                            p bar
+                            </script>
+                            出力:
+                            <script class="brush: js"  type="syntaxhighlighter">
+                            <![CDATA[
+                            <!-- just some paragraphs -->
+                            <p>foo</p>
+                            <p>bar</p>
+                            ]]>
+                            </script>
+                            </p>
+                            <p>
+                            また、<code class="example">//</code> の後に <code class="example">- (ハイフン)</code>を付け加えることで、コンパイル後に除去される単一行コメントを記述できます。
+                            <script class="brush: js"  type="syntaxhighlighter">
+                            //- just some paragraphs
+                            p foo
+                            p bar
+                            </script>
+                            出力:
+                            <script class="brush: css"  type="syntaxhighlighter">
+                            <![CDATA[
+                            <p>foo</p>
+                            <p>bar</p>
+                            ]]>
+                            </script>
+                            </p>
+                        </div>
+                        <div>
+                            <h2>ブロックコメント</h2>
+                            <p>ブロックコメントは次のように記述します。
+                            <script class="brush: css"  type="syntaxhighlighter">
+                            body
+                              //
+                                #content
+                                  h1 Example
+                            </script>
+                            出力:
+                            <script class="brush: css"  type="syntaxhighlighter">
+                            <![CDATA[
+                            <body&gt;
+                              <!--
+                                <div id="content">
+                                  <h1&>Example</h1>
+                                </div>
+                              -->
+                            </body>
+                            ]]>
+                            </script>
+                            </p>
+                            
+                            <p>条件付きコメントもサポートされています。例えばIE用の内容を含むコメントは次のように記述します。
+                            <script class="brush: css"  type="syntaxhighlighter">
+                            body
+                              /if IE
+                                a(href='http://www.mozilla.com/en-US/firefox/') Get Firefox
+                            </script>
+                            出力:
+                            <script class="brush: css"  type="syntaxhighlighter">
+                            <![CDATA[
+                            <body&gt;
+                              <!--[if IE]-->
+                                <a href="http://www.mozilla.com/en-US/firefox/">Get Firefox</a>
+                              <![endif]--&gt;
+                            </body>
+                            ]]>
+                            </script>
+                            </p>
+                        </div>
+                    </article>
+                        
+                    <article class="article">
+                        <div>
+                            <h2>ネスト</h2>
+                            <p>ネストされたタグ構造を自然な形式で記述できます。
+                            <script class="brush: css"  type="syntaxhighlighter">
+                            ul
+                              li.first
+                                a(href='#') foo
+                              li
+                                a(href='#') bar
+                              li.last
+                                a(href='#') baz
+                            </script>
+                            出力:
+                            <script class="brush: js"  type="syntaxhighlighter">
+                            <![CDATA[
+                            <ul>
+                              <li class="first"><a href="#">foo</a></li>
+                              <li><a href="#">bar</a></li>
+                              <li class="last"><a href="#">baz</a></li>
+                            </ul>
+                            ]]>
+                            </script>
+                            </p>
+                        </div>
+                    </article>
+                        
+                    <article class="article">
+                        <div>
+                            <h2>拡張ブロック</h2>
+                            <p>拡張ブロックは、ネスト構造を単一行で簡潔に記述する手段を提供します。<br />
+                            次の例は、ひとつ上のネストの例と等価です。
+                            <script class="brush: css"  type="syntaxhighlighter">
+                            ul
+                              li.first: a(href='#') foo
+                              li: a(href='#') bar
+                              li.last: a(href='#') baz
+                            </script>
+                            </p>
+                        </div>
+                    </article>
+                        
+                    <article class="article">
+                        <div>
+                            <h2>アトリビュート</h2>
+                            <p>Jadeでは今のところ、アトリビュートの記述は<code class="example">()</code>内で<code class="example">,(カンマ)</code>で区切ることで行います。
+                            <script class="brush: css"  type="syntaxhighlighter">
+                                a(href='/login', title='View login page') Login
+                            </script>
+                            </p>
+                            <p>ブール値のアトリビュートもサポートされています。
+                            <script class="brush: css"  type="syntaxhighlighter">
+                                input(type="checkbox", checked)
+                            </script>
+                            </p>
+                            <p>変数を使用したブール値アトリビュートの出力は、 変数が評価された結果が<code class="example">true</code>の場合のみ格納されます。
+                            <script class="brush: css"  type="syntaxhighlighter">
+                            - var val1 = true, val2 = false;
+                              input(type='checkbox', checked= val1)
+                              input(type='checkbox', checked= val2)
+                            </script>
+                            出力:
+                            <script class="brush: css"  type="syntaxhighlighter">
+                            <![CDATA[
+                            	<input type="checkbox" checked="checked" />
+                            	<input type="checkbox" />
+                            ]]>
+                            </script>
+                            </p>
+                            <p>複数行にわたって記述することもできます。
+                            <script class="brush: css"  type="syntaxhighlighter">
+                            input(type='checkbox'
+                              name='agreement'
+                              checked)
+                            </script>
+                            </p>
+							<p>ホワイトスペースは？もちろん大丈夫です。
+                            <script class="brush: css"  type="syntaxhighlighter">
+                            input(
+							  type='checkbox'
+                              name='agreement'
+                              checked)
+                            </script>
+                            </p>
+                            <p><code class="example">=</code> の代わりに<code class="example">:</code>を使用することもできます。
+                            <script class="brush: css"  type="syntaxhighlighter">
+                                rss(xmlns:atom="atom")
+                            </script>
+							<p>アトリビュートでの補間もサポートしています。例をお見せしましょう。<br />
+							'{ id: 12, name: 'tobi' }'というプロパティを持つ'user'という変数があるとします。<br />
+							そしてhref属性に"/user/12"を持つアンカータグを作りたいとしましょう。<br />
+							ここで、いつものJavaScriptの結合方法が使用できます。
+                            <script class="brush: css"  type="syntaxhighlighter">
+                                a(href='/user/' + user.id)= user.name
+                            </script>
+							もしくは、jadeの持つ形式を使用できます。
+							<script class="brush: css"  type="syntaxhighlighter">
+                                a(href='/user/#{user.id}')= user.name
+                            </script>
+                            </p>
+                        </div>
+                    </article>
+                        
+                    <article class="article">
+                        <div>
+                            <h2>DOCTYPE</h2>
+                            <p>DOCTYPE宣言を加えるには、<code class="example">!!!</code>もしくは<code class="example">doctype</code>のあとにオプションの値を続けて記述するだけです。
+							<script class="brush: css"  type="syntaxhighlighter">!!! 5</script>
+							または
+                            <script class="brush: css"  type="syntaxhighlighter">!!! html</script>
+							または
+							<script class="brush: css"  type="syntaxhighlighter">doctype html</script>
+                            </p>
+							<p>DOCTYPEを表すオプションの値は大文字・小文字を区別<b>しません</b>。したがって次の記述は等価です。
+							<script class="brush: css"  type="syntaxhighlighter">
+							doctype Basic
+							doctype basic</script>
+							<p>以下はデフォルトで定義されているDOCTYPE値です。これは容易に拡張することができます。
+                            <script class="brush: js"  type="syntaxhighlighter">
+                            var doctypes = exports.doctypes = {
+                                '5': '&lt;!DOCTYPE html&gt;',
+                                'xml': '&lt;?xml version="1.0" encoding="utf-8" ?&gt;',
+                                'default': '&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;',
+                                'transitional': '&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;',
+                                'strict': '&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;',
+                                'frameset': '&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"&gt;',
+                                '1.1': '&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;',
+                                'basic': '&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd"&gt;',
+                                'mobile': '&lt;!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd"&gt;'
+                            };
+                            </script>
+                            </p>
+                            <p>デフォルトのDOCTYPEを変更するには、単純に次のようにします。
+                            <script class="brush: js"  type="syntaxhighlighter">
+                                jade.doctypes.default = 'whatever you want';
+                            </script>
+                            </p>
+                        </div>
+                    </article>
+                </section><!-- section#syntax end -->
+                
+                <section class="section" id="filters">
+                    <h1><span class="en">Filters</span> | フィルタ</h1>
+                    <article class="article">
+                        <p>フィルタは<code class="example">:</code>をプリフィクスに持ちます(例. <code class="example">:markdown</code>)。<br />
+                        後続するブロック内のテキストを、任意の処理のための関数に渡すことができます。<br />
+                        フィルタの種類は、このドキュメントの<a href="#features">主な機能</a>のフィルタの項を参照してください。</p>
+                        <p>以下はmarkdownプラグインを使用したフィルタ処理の一例です。
+                        <code class="example">:markdown</code>に続くテキストブロックを<a href="http://ja.wikipedia.org/wiki/Markdown">Markdown</a>記法で記述できます。<br />
+                        <script class="brush: css"  type="syntaxhighlighter">
+                        body
+                          :markdown
+                            Woah! jade _and_ markdown, very **cool**
+                            we can even link to [stuff](http://google.com)
+                        </script>
+                        出力:
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        <![CDATA[
+                            <body>
+                              <p>Woah! jade <em>and</em> markdown, very <strong>cool</strong>we can even link to <a href="http://google.com">stuff</a></p>
+                            </body>
+                        ]]>
+                        </script>
+                        </p>
+                        
+                        <p>独自のフィルタを定義して、構文木の操作に使用することもできます。<br />
+                        例えば、私はある時、おそらく条件分岐の結果によって出力を操作したいと思ったのでしょう、<br />
+                        それはconditionalsと名付けたフィルタによって実現できました。<br />
+                        通常、フィルタはテキストブロックに対して機能しますが、私の作成したフィルタは通常のブロックを受け取り、<br />
+                        ネストされたタグに対して様々な処理をおこなうことができます。
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        body
+                          conditionals:
+                            if role == 'admin'
+                              p You are amazing
+                            else
+                              p Not so amazing
+                        </script>
+                        </p>
+                        <p>この場合、通常のコードブロックに必要な<code class="example">-</code>プリフィクスは必要ありません。<br />
+                        フィルタ定義の方法を含めた構文木の操作の例は <em>./expamples/conditionals.js</em> と <em>./expamples/model.js</em> にあり、基本的には必要に応じてvisitorメソッドを再定義するかサブクラス化するだけです。またこれらのファイル中には、上記の明快な例の他にもこの機能性に関していくつかの興味深いユースケースを見ることができます。HTTPリクエスト数削減ためのアセットの圧縮、またエラーの記録方法などについてです。
+                        </p>
+                    </article>
+                </section><!-- section#filters end -->
+                
+                <section class="section" id="code">
+                    <h1><span class="en">Code</span> | コード</h1>
+                    <article class="article">
+                        <p>Jadeでは現在、実行可能なコードについて3つの分類を設けています。<br />
+                        一つ目は、プリフィクス<code class="example">-</code>で始まり、バッファされないものです。<br />
+                        <script class="brush: js"  type="syntaxhighlighter">
+                            - var foo = 'bar';
+                        </script>
+                        </p>
+                        <p>これは条件分岐、または繰り返しに使用できます。
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        - for (var key in obj)
+                          p= obj[key]
+                        </script>
+                        </p>
+                        <p>Jadeの持つバッファリング機能を用いることで以下の記述も可能です。
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        - if (foo)
+                          ul
+                            li yay
+                            li foo
+                            li worked
+                        - else
+                          p oh no! didnt work
+                        </script>
+                        繰り返しのやや冗長な記述は以下のようになります。
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        - if (items.length)
+                          ul
+                            - items.forEach(function(item){
+                              li= item
+                            - })
+                        </script>
+                        お好きなやり方でどうぞ！
+                        </p>
+                        
+                        <p>二つ目はエスケープドバッファによるコードです。プリフィクス <code class="example">=</code>で始まり、戻り値は保持されます。
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        - var foo = 'bar'
+                        = foo
+                        h1= foo
+                        </script>
+                        出力は
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        <![CDATA[
+                        bar<h1>bar</h1>
+                        ]]>
+                        </script>
+                        となります。
+                        </p>
+                        
+                        <p><code class="example">=</code>によってバッファされるコードは、デフォルトではセキュリティを考慮してエスケープされますが、エスケープされていない値を出力する場合は<code class="example">!=</code>を使用します。<br />
+                        HTMLタグを含む変数をそのままタグとして利用したい場合にはこの方法を使用します。
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        - var foo = '<em>I want unescaped value!</em>'
+                        p!= foo
+                        </script>
+                        出力:
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        <![CDATA[
+                            <p><em>I want unescaped value!</em></p>
+                        ]]>
+                        </script>
+                        </p>
+                        
+                        <p>三つ目は"バニラ"なJavaScriptを許容する面から生まれた例外です。<br />
+						<code class="example">- each</code>トークンがこれにあたります。これは次の形式を取ります。
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        - each VAL[, KEY] in OBJ
+                        </script>
+                        配列のイテレーションを例にします。
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        - var items = ["one", "two", "three"]
+                        - each item in items
+                          li= item
+                        </script>
+                        出力:
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        <![CDATA[
+                            <li>one</li>
+                            <li>two</li>
+                            <li>three</li>
+                        ]]>
+                        </script>
+                        オブジェクトのイテレーションはこうです。
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        - var obj = { foo: 'bar' }
+                        - each val, key in obj
+                          li #{key}: #{val}
+                        </script>
+                        出力:<br />
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        <![CDATA[
+                            <li>foo: bar</li>
+                        ]]>
+                        </script>
+                        これらをネストすることもできます！<br />
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        - each user in users
+                          - each role in user.roles
+                            li= role
+                        </script>
+                        </p>
+                        
+                        <p>プロパティが<code class="example">undefined</code>のときは、空の文字列が出力されます。例えば<br />
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        textarea= user.signature
+                        </script>
+                        HTMLコードであれば、<code class="example">undefined</code>は文字列の"undefined"として出力されますが、現在のバージョンのJadeでは単純に次のように出力されます。<br />
+                        <script class="brush: js"  type="syntaxhighlighter">
+                        <![CDATA[
+                            <textarea></textarea>
+                        ]]>
+                        </script>
+                        </p>
+                    </article>
+                </section><!-- section#code end -->
+                
+                <section class="section" id="bin">
+                    <h1><span class="en">bin/jade</span></h1>
+                    <article class="article">
+                        <p>htmlコードを標準出力に表示するには、<code class="example">--pipe</code>オプションを加えます。
+                        <script class="brush: bash"  type="syntaxhighlighter">
+                        jade examples/*.jade --pipe
+                        </script>
+                        </p>
+                        <p><em>examples</em>ディレクトリ内のjadeファイルを全てコンパイルし、htmlを生成するコマンドは以下です。
+                        <script class="brush: bash"  type="syntaxhighlighter">
+                        jade examples/*.jade
+                        </script>
+                        <p>任意のオプションを渡すことができます。
+                        <script class="brush: bash"  type="syntaxhighlighter">
+                        jade examples/layout.jade --options '{ locals: { title: "foo" }}'
+                        </script>
+                        </p>
+                    </article>
+                </section><!-- section#bin end -->
+            </div><!-- #contents end -->
+        </div><!-- #content-wrap end -->
+        <div id="back">
+            <a href="#">TOPへ戻る</a>
+        </div>
+        
+	</div><!-- #wrap end -->
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-11355664-6']);
+		_gaq.push(['_trackPageview']);
+		
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+</body>
+</html>
